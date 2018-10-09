@@ -71,6 +71,6 @@ def validate_signup():
 @app.route("/welcome")
 def welcome():
     username = request.args.get("username")
-    return f"<h2>Welcome, {username}!<h2>"
+    return render_template("welcome.html", username=username)
 
 app.run()
