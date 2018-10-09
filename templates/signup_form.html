@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<form>
+  <table>
+      <thead><h1>Signup</h1>
+      </thead>
+      <tbody>
+          <tr>
+            <td>
+              <label for="username"> Username </label> 
+            </td>
+            <td>
+                <input name="username" type="text" />
+            </td>
+          </tr>
+          <tr>
+              <td>
+                <label for="pw">Password</label>
+              </td>
+              <td>  
+                <input name="pw" type="password" />
+              </td>
+          </tr>
+          <tr>
+              <td>
+                <label for="verifypw"> Verify Password</label> 
+             </td>
+             <td>
+                <input name="verifypw" type="password" />
+            </td>
+          </tr> 
+          <tr>
+              <td>
+                <label for="email">Email (optional)</label> 
+              </td>
+              <td> 
+                <input name="email" type="text" />
+                
+             </td>
+          </tr>
+          <tr>
+              <td>
+                <input name="submit" type="submit" value="Submit" />
+              </td>
+
+          </tr>         
+      </tbody>
+      
+    
+</table>
+</form>
+{% endblock %}
