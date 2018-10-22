@@ -1,4 +1,5 @@
 from flask import Flask, request, redirect, render_template
+import re
 
 app = Flask(__name__)
 app.config['DEBUG']=True
@@ -18,19 +19,23 @@ def validate_signup():
     password_error = ''
     email_error = ''
     verifypw_error = ''
+# Regex pattern checks for at alphanumeric characters - minumum 6, maximum 20
+    un_pattern = re.compile(r"[\w]{6,20}")
+    un_matched = un_pattern.match(username)
+# Regex pattern checks for non-white space characters - minimum 8, maximum 20
+    pw_pattern = re.compile(r"[^\s]{8,20}")
+    pw_matched = pw_pattern.match(password)
+# Regex pattern looks for alphanumeric characters - minimum 3, no max; "@" symbol, 
+#at least one alphanumeric, ""."", at least 2 alphas(case insensitive)
+    email_pattern = re.compile(r"[\w]{3,}[@][\w]+[.][a-zA-Z]{2,}")
+    email_matched = email_pattern.match(email)
 
 #validate username
     if username == '':
         username_error = "This field is required."
         username = ''
-    elif len(username) < 3:
+    elif not un_matched:
         username_error = "Username is not valid."
-    elif len(username) > 20:
-        username_error = "Username is not valid."
-        username = ''
-    elif username[0] == " ":
-        username_error = "Username is not valid."
-        username = ''
     else:
         username = username
         username_error = ''
@@ -40,14 +45,10 @@ def validate_signup():
         password_error = "This field is required."
         password = ''
         verifypw = ''      
-    elif len(password) < 3:
-        password_error = "Password is not valid."
+    elif not pw_matched:
+        password_error = "This password is not valid"
         password = ''
-        verifypw = ''
-    elif len(password) > 20:
-        password_error = "Password is not valid."
-        password = ''
-        verifypw = ''     
+        verifypw = ''    
 # verify both passwords match
     elif password != verifypw:
         verifypw_error = "Passwords do not match."
@@ -64,20 +65,8 @@ def validate_signup():
     if email == '':
         email_error = ''
         email = email
-    elif " " in email:
-        email_error = "Email is not valid."
-        email = ''
-    elif "." not in email:
-        email_error = "Email is not valid."
-        email = ''
-    elif "@" not in email:
-        email_error = "Email is not valid."
-        email = ''
-    elif len(email) < 3:
-        email_error = "Email is not valid."
-        email = ''
-    elif len(email) > 24:
-        email_error = "Email is not valid."
+    elif not email_matched:
+        email_error = 'Email not valid'
         email = ''
     else:
         email_error = ''
